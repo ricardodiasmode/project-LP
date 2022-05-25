@@ -2,7 +2,10 @@
 
 (* Creat the body of a function expression. *)
 fun makeFunAux (n: int, xs: (plcType * string) list, e: expr): expr =
-    e (* TODO *)
+    case xs of
+      [] => e
+    | (t, s)::tl => Let(s, Item(n, lookup s), if (tl = nil) then e else makeFunAux(n+1, tl, e));
+(* Issue on lookup above. *)
 
 (* Create the list of arguments of a function. *)
 fun makeType (args: (plcType * string) list): plcType =
