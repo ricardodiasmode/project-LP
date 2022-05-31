@@ -28,4 +28,8 @@ fun init() = ()
 %%
 %header (functor PlcLexerFun(structure Tokens: PlcParser_TOKENS));
 
+number = [0-9];
+whitespace = [\ \t];
+letter = [A-Za-z];
+name = [a-zA-Z_][a-zA-Z_0-9]*;
 %%
