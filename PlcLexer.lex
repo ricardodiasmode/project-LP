@@ -31,5 +31,5 @@ fun init() = ()
 number = [0-9];
 whitespace = [\ \t];
 letter = [A-Za-z];
-name = [a-zA-Z_][a-zA-Z_0-9]*;
+name = PlcParser;
 %%
