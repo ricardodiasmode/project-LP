@@ -83,6 +83,7 @@ Prog: Expr (Expr)
 
 Declar: VAR Name EQUAL Expr SEMICOLON Prog (Let(Name, Expr, Prog))
 
+
 Expr: NOT Expr (Prim1("!", Expr1))
     | MINUS Expr (Prim1("-", Expr1))
     | Expr AND Expr (Prim2("&&", Expr1, Expr2))
@@ -92,3 +93,8 @@ Expr: NOT Expr (Prim1("!", Expr1))
     | Expr DIV Expr (Prim2("/", Expr1, Expr2))
     | Expr EQUAL Expr (Prim2("=", Expr1, Expr2))
     | Expr SEMICOLON Expr (Prim2(";", Expr1, Expr2))
+    | Const (Const)
+
+Const: TRUE (ConB(true))
+     | FALSE (ConB(false))
+     | Number (ConI(Number))

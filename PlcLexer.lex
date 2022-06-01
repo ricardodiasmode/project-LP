@@ -8,6 +8,16 @@ type slvalue = Tokens.svalue
 type ('a,'b) token = ('a,'b) Tokens.token
 type lexresult = (slvalue, pos)token
 
+fun keyWords (s, lpos, rpos) =
+    case s of
+          "Bool" => BOOL(lpos, rpos)
+        | "Int" => INT(lpos, rpos)
+        | "else" => ELSE(lpos, rpos)
+        | "false" => FALSE(lpos, rpos)
+        | "true" => TRUE(lpos, rpos)
+        | "var" => VAR(lpos, rpos)
+        | _ => Name(s, lpos, rpos)
+
 (* A function to print a message error on the screen. *)
 val error = fn x => TextIO.output(TextIO.stdOut, x ^ "\n")
 val lineNumber = ref 0
@@ -33,31 +43,17 @@ whitespace = [\ \t];
 letter = [A-Za-z];
 name = [a-zA-Z_][a-zA-Z_0-9]*;
 %%
-
-\n => 
-{whitespace}+ => 
-{number}+ => 
-{name} => 
-"!" => 
-"&&" => 
-"=" => 
-"!=" => 
-"+" => 
-"-" => 
-"*" => 
-"/" => 
-"," => 
-";" => 
-":" => 
-"::" => 
-"<" => 
-"<=" => 
-"[" => 
-"]" => 
-"{" => 
-"}" => 
-"(" => 
-")" => 
-"|" => 
-"->" => 
-"=>" => 
+\n => (lineNumber := !lineNumber + 1; EOF(!pos, !pos));
+{whitespace}+ => (lex());
+{number}+ => (Number(strToInt(yytext), !pos, !pos));
+{name} => (keyWords(yytext, !pos, !pos));
+"!" => (NOT(!pos, !pos));
+"&&" => (AND(!pos, !pos));
+"=" => (EQUAL(!pos, !pos));
+"+" => (PLUS(!pos, !pos));
+"-" => (MINUS(!pos, !pos));
+"*" => (MULTI(!pos, !pos));
+"/" => (DIV(!pos, !pos));
+";" => (SEMICOLON(!pos, !pos));
+. => (error("\n*** Lexer error: character invalid ***\n");
+      raise Fail("Lexer error: character invalid " ^ yytext));
