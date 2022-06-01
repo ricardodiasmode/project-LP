@@ -1,7 +1,7 @@
 %%
 
 %name PlcParser
-
+(*
 %term ConI of int
   | ConB of bool
   | ESeq of plcType
@@ -28,13 +28,31 @@
   | SeqT of plcType
   | EOF
 
+
 %nonterm plcType | expr | plcVal
 
+*)
+
+%term VAR | INT | BOOL | NIL
+    | TRUE | FALSE
+    | EQUAL | PLUS | MINUS | DIV | MULTI
+    | NOT | AND
+    | SEMICOLON
+    | Name of string
+    | Number of Int
+    | EOF
+
+%nonterm Prog of expr
+    | Declar of expr
+    | Expr of expr
+
+
 %left Prim1 Prim2
+%left AND EQUAL MULTI DIV PLUS MINUS
+%right SEMICOLON
+%nonassoc NOT, Name
 
 %pos int
-
-
 
 %eop EOF
 
@@ -43,7 +61,7 @@
 %start Prog
 
 %%
-
+(*
 plcType : IntT (IntT)
         | BoolT (BoolT)
         | env (makeType(env))
@@ -58,3 +76,19 @@ expr : ConI (ConI)
 
 plcVal : BoolV (BoolV)
        | IntV (IntV)
+*)
+
+Prog: Expr (Expr)
+    | Declar (Declar)
+
+Declar: VAR Name EQUAL Expr SEMICOLON Prog (Let(Name, Expr, Prog))
+
+Expr: NOT Expr (Prim1("!", Expr1))
+    | MINUS Expr (Prim1("-", Expr1))
+    | Expr AND Expr (Prim2("&&", Expr1, Expr2))
+    | Expr PLUS Expr (Prim2("+", Expr1, Expr2))
+    | Expr MINUS Expr (Prim2("-", Expr1, Expr2))
+    | Expr MULTI Expr (Prim2("*", Expr1, Expr2))
+    | Expr DIV Expr (Prim2("/", Expr1, Expr2))
+    | Expr EQUAL Expr (Prim2("=", Expr1, Expr2))
+    | Expr SEMICOLON Expr (Prim2(";", Expr1, Expr2))
