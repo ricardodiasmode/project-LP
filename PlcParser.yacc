@@ -26,6 +26,7 @@
   | FunT of plcType * plcType
   | ListT of plcType list
   | SeqT of plcType
+  | EOF
 
 %nonterm plcType | expr | plcVal
 
@@ -43,6 +44,17 @@
 
 %%
 
-PlcType : IntT
-        | BoolT
-        | 
+plcType : IntT (IntT)
+        | BoolT (BoolT)
+        | env (makeType(env))
+
+expr : ConI (ConI)
+     | ConB (ConB)
+     | ESeq (ESeq)
+     | Var (Var)
+     | env expr (makeAnon(env expr))
+     | Var env plcType expr expr (makeFun(Var env plcType expr expr))
+     | int env expr (makeFunAux(int env expr))
+
+plcVal : BoolV (BoolV)
+       | IntV (IntV)
