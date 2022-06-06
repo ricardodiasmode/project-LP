@@ -8,6 +8,8 @@ type slvalue = Tokens.svalue
 type ('a,'b) token = ('a,'b) Tokens.token
 type lexresult = (slvalue, pos)token
 
+val pos = ref 0
+
 fun keyWords (s, lpos, rpos) =
     case s of
           "Bool" => BOOL(lpos, rpos)
@@ -17,6 +19,12 @@ fun keyWords (s, lpos, rpos) =
         | "true" => TRUE(lpos, rpos)
         | "var" => VAR(lpos, rpos)
         | _ => Name(s, lpos, rpos)
+
+(* Convert a str to an int *)
+fun strToInt s =
+    case Int.fromString s of
+         SOME i => i
+       | NONE => raise Fail ("Could not convert string '" ^ s ^ "' to int!")
 
 (* A function to print a message error on the screen. *)
 val error = fn x => TextIO.output(TextIO.stdOut, x ^ "\n")
