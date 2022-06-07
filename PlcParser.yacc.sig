@@ -2,6 +2,8 @@ signature PlcParser_TOKENS =
 sig
 type ('a,'b) token
 type svalue
+val CLOSEPARENT:  'a * 'a -> (svalue,'a) token
+val OPENPARENT:  'a * 'a -> (svalue,'a) token
 val ELSE:  'a * 'a -> (svalue,'a) token
 val Prim2:  'a * 'a -> (svalue,'a) token
 val Prim1:  'a * 'a -> (svalue,'a) token

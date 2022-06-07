@@ -18,9 +18,7 @@ Control.Print.stringDepth := 1000;
 
 open PlcFrontEnd;
 
-fromString "true";
-
-use "testParserCases.sml"
+fromString "()";
 
 (* fromString "15";
 fromString "true";

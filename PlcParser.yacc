@@ -15,6 +15,8 @@
     | Prim1
     | Prim2
     | ELSE
+    | OPENPARENT
+    | CLOSEPARENT
 
 %nonterm Prog of expr
     | Declar of expr
@@ -24,7 +26,7 @@
 
 %left Prim1 Prim2
 %left AND EQUAL MULTI DIV PLUS MINUS
-%right SEMICOLON
+%right SEMICOLON OPENPARENT CLOSEPARENT
 %nonassoc NOT Name
 
 %eop EOF
@@ -52,3 +54,5 @@ Expr: NOT Expr (Prim1("!", Expr1))
     | TRUE (ConB(true))
     | FALSE (ConB(false))
     | Number (ConI(Number))
+    | OPENPARENT CLOSEPARENT ()
+    | OPENPARENT Expr CLOSEPARENT (Expr1)
