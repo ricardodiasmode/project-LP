@@ -1,8 +1,13 @@
 (* Plc Parser Aux *)
 
+fun invertListTuple [] = []
+  |  invertListTuple ((a, b)::tl) = (b, a)::(invertListTuple(tl));
+
 (* Creat the body of a function expression. *)
 fun makeFunAux (n: int, xs: (plcType * string) list, e: expr): expr =
-    e (* TODO *)
+    case xs of
+      [] => e
+    | (t, s)::tl => Let(s, Item(n, ESeq (lookup (invertListTuple(xs)) s)), if (tl = nil) then e else makeFunAux(n+1, tl, e));
 
 (* Create the list of arguments of a function. *)
 fun makeType (args: (plcType * string) list): plcType =
