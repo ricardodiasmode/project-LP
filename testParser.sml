@@ -18,7 +18,11 @@ Control.Print.stringDepth := 1000;
 
 open PlcFrontEnd;
 
-fromString "15";
+fromString "true";
+
+use "testParserCases.sml"
+
+(* fromString "15";
 fromString "true";
 fromString "()";
 fromString "(6,false)[1]";
@@ -29,9 +33,4 @@ fromString "fn (Int x) => -x end";
 fromString "var x = 9; x + 3";
 fromString "fun f(Int x) = x; f(1)";
 fromString "match x with | 0 -> 1| _ -> -1 end";
-fromFile ("example.plc");
-
-use "testParserCases.sml"
-
-(* Try to add a systematic way of using the test cases in
-   testParserCases to stress test your parser *)
+fromFile ("example.plc"); *)
