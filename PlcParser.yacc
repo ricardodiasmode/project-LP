@@ -26,7 +26,7 @@
 
 %left Prim1 Prim2
 %left AND EQUAL MULTI DIV PLUS MINUS
-%right SEMICOLON OPENPARENT CLOSEPARENT
+%right SEMICOLON OPENPARENT CLOSEPARENT VAR
 %nonassoc NOT Name
 
 %eop EOF
@@ -40,7 +40,7 @@
 Prog: Expr (Expr)
     | Declar (Declar)
 
-Declar: VAR Name EQUAL Expr SEMICOLON Prog (Let(Name, Expr, Prog))
+Declar: VAR Name EQUAL Expr SEMICOLON Expr Prog (Let(Name1, Expr1, Expr2)))
 
 Expr: NOT Expr (Prim1("!", Expr1))
     | MINUS Expr (Prim1("-", Expr1))
@@ -54,5 +54,4 @@ Expr: NOT Expr (Prim1("!", Expr1))
     | TRUE (ConB(true))
     | FALSE (ConB(false))
     | Number (ConI(Number))
-    | OPENPARENT CLOSEPARENT ()
     | OPENPARENT Expr CLOSEPARENT (Expr1)
