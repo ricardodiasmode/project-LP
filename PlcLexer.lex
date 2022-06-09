@@ -65,5 +65,8 @@ name = [a-zA-Z_][a-zA-Z_0-9]*;
 ";" => (SEMICOLON(!pos, !pos));
 "(" => (OPENPARENT(!pos, !pos));
 ")" => (CLOSEPARENT(!pos, !pos));
+"," => (COMMA(!pos, !pos));
+"[" => (OPENSQRBRACKET(!pos, !pos));
+"]" => (CLOSESQRBRACKET(!pos, !pos));
 . => (error("\n*** Lexer error: character invalid ***\n");
       raise Fail("Lexer error: character invalid " ^ yytext));

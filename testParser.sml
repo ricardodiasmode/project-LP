@@ -18,7 +18,7 @@ Control.Print.stringDepth := 1000;
 
 open PlcFrontEnd;
 
-fromString "var x = 9; x + 3";
+fromString "(6,false)[1]";
 
 (* fromString "15";
 fromString "true";

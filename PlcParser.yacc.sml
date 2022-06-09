@@ -15,80 +15,99 @@ structure Token = Token
 local open LrTable in 
 val table=let val actionRows =
 "\
-\\001\000\001\000\048\000\005\000\048\000\006\000\048\000\007\000\045\000\
-\\008\000\045\000\009\000\045\000\010\000\045\000\011\000\045\000\
-\\012\000\048\000\013\000\045\000\014\000\012\000\016\000\048\000\
-\\017\000\045\000\021\000\048\000\000\000\
-\\001\000\001\000\011\000\005\000\010\000\006\000\009\000\007\000\018\000\
-\\008\000\017\000\009\000\038\000\010\000\015\000\011\000\014\000\
-\\012\000\007\000\013\000\013\000\014\000\012\000\016\000\006\000\
-\\021\000\005\000\000\000\
-\\001\000\001\000\011\000\005\000\010\000\006\000\009\000\009\000\008\000\
-\\012\000\007\000\016\000\006\000\021\000\005\000\000\000\
-\\001\000\005\000\010\000\006\000\009\000\009\000\008\000\012\000\007\000\
-\\015\000\034\000\016\000\006\000\021\000\005\000\000\000\
-\\001\000\005\000\010\000\006\000\009\000\009\000\008\000\012\000\007\000\
-\\016\000\006\000\021\000\005\000\000\000\
-\\001\000\007\000\018\000\008\000\017\000\009\000\016\000\010\000\015\000\
-\\011\000\014\000\013\000\013\000\014\000\012\000\022\000\030\000\000\000\
-\\001\000\007\000\018\000\008\000\017\000\009\000\016\000\010\000\015\000\
-\\011\000\014\000\013\000\013\000\014\000\033\000\000\000\
-\\001\000\007\000\031\000\000\000\
-\\001\000\008\000\035\000\000\000\
-\\001\000\015\000\022\000\000\000\
+\\001\000\001\000\062\000\005\000\062\000\006\000\062\000\007\000\059\000\
+\\008\000\059\000\009\000\059\000\010\000\059\000\011\000\059\000\
+\\012\000\062\000\013\000\059\000\014\000\014\000\016\000\062\000\
+\\017\000\059\000\021\000\062\000\000\000\
+\\001\000\001\000\012\000\005\000\011\000\006\000\010\000\009\000\009\000\
+\\012\000\008\000\016\000\007\000\021\000\006\000\000\000\
+\\001\000\003\000\026\000\005\000\011\000\006\000\010\000\009\000\009\000\
+\\012\000\008\000\016\000\007\000\021\000\006\000\022\000\025\000\
+\\024\000\024\000\000\000\
+\\001\000\003\000\026\000\024\000\024\000\000\000\
+\\001\000\005\000\011\000\006\000\010\000\009\000\009\000\012\000\008\000\
+\\016\000\007\000\021\000\006\000\000\000\
+\\001\000\007\000\020\000\008\000\019\000\009\000\018\000\010\000\017\000\
+\\011\000\016\000\013\000\015\000\014\000\014\000\022\000\040\000\
+\\023\000\039\000\000\000\
+\\001\000\007\000\020\000\008\000\019\000\009\000\018\000\010\000\017\000\
+\\011\000\016\000\013\000\015\000\014\000\014\000\022\000\047\000\000\000\
+\\001\000\007\000\020\000\008\000\019\000\009\000\018\000\010\000\017\000\
+\\011\000\016\000\013\000\015\000\014\000\048\000\000\000\
+\\001\000\007\000\042\000\000\000\
+\\001\000\015\000\029\000\000\000\
+\\001\000\016\000\030\000\000\000\
 \\001\000\017\000\000\000\000\000\
-\\041\000\007\000\018\000\008\000\017\000\009\000\016\000\010\000\015\000\
-\\011\000\014\000\013\000\013\000\014\000\012\000\000\000\
-\\042\000\000\000\
-\\043\000\000\000\
-\\044\000\000\000\
-\\045\000\014\000\012\000\000\000\
-\\046\000\014\000\012\000\000\000\
-\\047\000\014\000\012\000\000\000\
-\\048\000\014\000\012\000\000\000\
-\\049\000\014\000\012\000\000\000\
-\\050\000\014\000\012\000\000\000\
-\\051\000\014\000\012\000\000\000\
-\\052\000\014\000\012\000\000\000\
-\\053\000\000\000\
-\\054\000\000\000\
+\\001\000\022\000\038\000\000\000\
+\\001\000\024\000\013\000\000\000\
+\\001\000\025\000\043\000\000\000\
+\\001\000\025\000\045\000\000\000\
+\\054\000\007\000\020\000\008\000\019\000\009\000\018\000\010\000\017\000\
+\\011\000\016\000\013\000\015\000\014\000\014\000\000\000\
 \\055\000\000\000\
-\\056\000\000\000\
+\\056\000\024\000\013\000\000\000\
+\\057\000\000\000\
+\\058\000\000\000\
+\\059\000\014\000\014\000\000\000\
+\\060\000\014\000\014\000\000\000\
+\\061\000\014\000\014\000\000\000\
+\\062\000\014\000\014\000\000\000\
+\\063\000\014\000\014\000\000\000\
+\\064\000\014\000\014\000\000\000\
+\\065\000\014\000\014\000\000\000\
+\\066\000\001\000\012\000\005\000\011\000\006\000\010\000\012\000\008\000\
+\\014\000\014\000\016\000\007\000\021\000\006\000\000\000\
+\\066\000\014\000\014\000\000\000\
+\\067\000\000\000\
+\\068\000\000\000\
+\\069\000\000\000\
+\\070\000\000\000\
+\\071\000\000\000\
+\\072\000\000\000\
+\\073\000\000\000\
+\\074\000\000\000\
+\\075\000\000\000\
+\\076\000\000\000\
 \"
 val actionRowNumbers =
-"\002\000\011\000\012\000\004\000\
-\\025\000\004\000\004\000\024\000\
-\\023\000\009\000\004\000\004\000\
+"\001\000\018\000\016\000\017\000\
+\\002\000\032\000\004\000\004\000\
+\\031\000\030\000\009\000\010\000\
 \\004\000\004\000\004\000\004\000\
-\\004\000\005\000\014\000\015\000\
-\\007\000\022\000\016\000\019\000\
-\\020\000\018\000\017\000\021\000\
-\\026\000\004\000\006\000\003\000\
-\\008\000\004\000\001\000\013\000\
-\\004\000\000\000\010\000"
+\\004\000\004\000\004\000\013\000\
+\\012\000\005\000\003\000\037\000\
+\\039\000\020\000\021\000\008\000\
+\\014\000\029\000\022\000\025\000\
+\\026\000\024\000\023\000\027\000\
+\\034\000\004\000\035\000\015\000\
+\\004\000\033\000\006\000\038\000\
+\\007\000\036\000\004\000\028\000\
+\\019\000\004\000\000\000\011\000"
 val gotoT =
 "\
-\\001\000\038\000\002\000\002\000\003\000\001\000\000\000\
-\\000\000\
-\\000\000\
-\\003\000\017\000\000\000\
-\\000\000\
-\\003\000\018\000\000\000\
-\\003\000\019\000\000\000\
+\\001\000\051\000\002\000\003\000\003\000\002\000\006\000\001\000\000\000\
 \\000\000\
 \\000\000\
 \\000\000\
-\\003\000\021\000\000\000\
-\\003\000\022\000\000\000\
-\\003\000\023\000\000\000\
-\\003\000\024\000\000\000\
-\\003\000\025\000\000\000\
-\\003\000\026\000\000\000\
-\\003\000\027\000\000\000\
+\\003\000\021\000\005\000\020\000\006\000\019\000\000\000\
+\\000\000\
+\\003\000\025\000\006\000\019\000\000\000\
+\\003\000\026\000\006\000\019\000\000\000\
 \\000\000\
 \\000\000\
 \\000\000\
 \\000\000\
+\\003\000\029\000\006\000\019\000\000\000\
+\\003\000\030\000\006\000\019\000\000\000\
+\\003\000\031\000\006\000\019\000\000\000\
+\\003\000\032\000\006\000\019\000\000\000\
+\\003\000\033\000\006\000\019\000\000\000\
+\\003\000\034\000\006\000\019\000\000\000\
+\\003\000\035\000\006\000\019\000\000\000\
+\\000\000\
+\\000\000\
+\\000\000\
+\\005\000\039\000\000\000\
 \\000\000\
 \\000\000\
 \\000\000\
@@ -97,19 +116,30 @@ val gotoT =
 \\000\000\
 \\000\000\
 \\000\000\
-\\003\000\030\000\000\000\
 \\000\000\
-\\003\000\021\000\000\000\
 \\000\000\
-\\003\000\034\000\000\000\
-\\001\000\035\000\002\000\002\000\003\000\001\000\000\000\
 \\000\000\
-\\003\000\037\000\000\000\
+\\000\000\
+\\000\000\
+\\000\000\
+\\003\000\042\000\006\000\019\000\000\000\
+\\000\000\
+\\000\000\
+\\003\000\044\000\006\000\019\000\000\000\
+\\000\000\
+\\000\000\
+\\000\000\
+\\000\000\
+\\000\000\
+\\003\000\047\000\006\000\019\000\000\000\
+\\001\000\048\000\002\000\003\000\003\000\002\000\006\000\001\000\000\000\
+\\000\000\
+\\003\000\050\000\006\000\019\000\000\000\
 \\000\000\
 \\000\000\
 \"
-val numstates = 39
-val numrules = 16
+val numstates = 52
+val numrules = 23
 val s = ref "" and index = ref 0
 val string_to_int = fn () => 
 let val i = !index
@@ -173,6 +203,7 @@ structure MlyValue =
 struct
 datatype svalue = VOID | ntVOID of unit ->  unit
  | Number of unit ->  (int) | Name of unit ->  (string)
+ | ExprList of unit ->  (expr) | PlcT of unit ->  (plcType)
  | Expr of unit ->  (expr) | Declar of unit ->  (expr)
  | Prog of unit ->  (expr)
 end
@@ -213,15 +244,19 @@ fn (T 0) => "VAR"
   | (T 19) => "ELSE"
   | (T 20) => "OPENPARENT"
   | (T 21) => "CLOSEPARENT"
+  | (T 22) => "COMMA"
+  | (T 23) => "OPENSQRBRACKET"
+  | (T 24) => "CLOSESQRBRACKET"
   | _ => "bogus-term"
 local open Header in
 val errtermvalue=
 fn _ => MlyValue.VOID
 end
 val terms : term list = nil
- $$ (T 21) $$ (T 20) $$ (T 19) $$ (T 18) $$ (T 17) $$ (T 16) $$ (T 13)
- $$ (T 12) $$ (T 11) $$ (T 10) $$ (T 9) $$ (T 8) $$ (T 7) $$ (T 6) $$ 
-(T 5) $$ (T 4) $$ (T 3) $$ (T 2) $$ (T 1) $$ (T 0)end
+ $$ (T 24) $$ (T 23) $$ (T 22) $$ (T 21) $$ (T 20) $$ (T 19) $$ (T 18)
+ $$ (T 17) $$ (T 16) $$ (T 13) $$ (T 12) $$ (T 11) $$ (T 10) $$ (T 9)
+ $$ (T 8) $$ (T 7) $$ (T 6) $$ (T 5) $$ (T 4) $$ (T 3) $$ (T 2) $$ (T 
+1) $$ (T 0)end
 structure Actions =
 struct 
 exception mlyAction of int
@@ -244,34 +279,41 @@ Declar as Declar1) = Declar1 ()
 end)
  in ( LrTable.NT 0, ( result, Declar1left, Declar1right), rest671)
 end
-|  ( 2, ( ( _, ( MlyValue.Prog Prog1, _, Prog1right)) :: ( _, ( 
-MlyValue.Expr Expr2, _, _)) :: _ :: ( _, ( MlyValue.Name Name2, _, _))
- :: _ :: ( _, ( MlyValue.Expr Expr1, _, _)) :: _ :: ( _, ( 
-MlyValue.Name Name1, _, _)) :: ( _, ( _, VAR1left, _)) :: rest671)) =>
- let val  result = MlyValue.Declar (fn _ => let val  Name1 = Name1 ()
+|  ( 2, ( ( _, ( MlyValue.ExprList ExprList1, ExprList1left, 
+ExprList1right)) :: rest671)) => let val  result = MlyValue.Prog (fn _
+ => let val  (ExprList as ExprList1) = ExprList1 ()
+ in (ExprList)
+end)
+ in ( LrTable.NT 0, ( result, ExprList1left, ExprList1right), rest671)
+
+end
+|  ( 3, ( ( _, ( MlyValue.Prog Prog1, _, Prog1right)) :: ( _, ( 
+MlyValue.Expr Expr2, _, _)) :: _ :: ( _, ( MlyValue.Expr Expr1, _, _))
+ :: _ :: ( _, ( MlyValue.Name Name1, _, _)) :: ( _, ( _, VAR1left, _))
+ :: rest671)) => let val  result = MlyValue.Declar (fn _ => let val  
+Name1 = Name1 ()
  val  Expr1 = Expr1 ()
- val  Name2 = Name2 ()
  val  Expr2 = Expr2 ()
  val  Prog1 = Prog1 ()
- in (Let(Name1, Expr1, Prim2("+", Var(Name2), Expr2)))
+ in (Let(Name1, Expr1, Expr2))
 end)
  in ( LrTable.NT 1, ( result, VAR1left, Prog1right), rest671)
 end
-|  ( 3, ( ( _, ( MlyValue.Expr Expr1, _, Expr1right)) :: ( _, ( _, 
+|  ( 4, ( ( _, ( MlyValue.Expr Expr1, _, Expr1right)) :: ( _, ( _, 
 NOT1left, _)) :: rest671)) => let val  result = MlyValue.Expr (fn _ =>
  let val  Expr1 = Expr1 ()
  in (Prim1("!", Expr1))
 end)
  in ( LrTable.NT 2, ( result, NOT1left, Expr1right), rest671)
 end
-|  ( 4, ( ( _, ( MlyValue.Expr Expr1, _, Expr1right)) :: ( _, ( _, 
+|  ( 5, ( ( _, ( MlyValue.Expr Expr1, _, Expr1right)) :: ( _, ( _, 
 MINUS1left, _)) :: rest671)) => let val  result = MlyValue.Expr (fn _
  => let val  Expr1 = Expr1 ()
  in (Prim1("-", Expr1))
 end)
  in ( LrTable.NT 2, ( result, MINUS1left, Expr1right), rest671)
 end
-|  ( 5, ( ( _, ( MlyValue.Expr Expr2, _, Expr2right)) :: _ :: ( _, ( 
+|  ( 6, ( ( _, ( MlyValue.Expr Expr2, _, Expr2right)) :: _ :: ( _, ( 
 MlyValue.Expr Expr1, Expr1left, _)) :: rest671)) => let val  result = 
 MlyValue.Expr (fn _ => let val  Expr1 = Expr1 ()
  val  Expr2 = Expr2 ()
@@ -279,7 +321,7 @@ MlyValue.Expr (fn _ => let val  Expr1 = Expr1 ()
 end)
  in ( LrTable.NT 2, ( result, Expr1left, Expr2right), rest671)
 end
-|  ( 6, ( ( _, ( MlyValue.Expr Expr2, _, Expr2right)) :: _ :: ( _, ( 
+|  ( 7, ( ( _, ( MlyValue.Expr Expr2, _, Expr2right)) :: _ :: ( _, ( 
 MlyValue.Expr Expr1, Expr1left, _)) :: rest671)) => let val  result = 
 MlyValue.Expr (fn _ => let val  Expr1 = Expr1 ()
  val  Expr2 = Expr2 ()
@@ -287,7 +329,7 @@ MlyValue.Expr (fn _ => let val  Expr1 = Expr1 ()
 end)
  in ( LrTable.NT 2, ( result, Expr1left, Expr2right), rest671)
 end
-|  ( 7, ( ( _, ( MlyValue.Expr Expr2, _, Expr2right)) :: _ :: ( _, ( 
+|  ( 8, ( ( _, ( MlyValue.Expr Expr2, _, Expr2right)) :: _ :: ( _, ( 
 MlyValue.Expr Expr1, Expr1left, _)) :: rest671)) => let val  result = 
 MlyValue.Expr (fn _ => let val  Expr1 = Expr1 ()
  val  Expr2 = Expr2 ()
@@ -295,7 +337,7 @@ MlyValue.Expr (fn _ => let val  Expr1 = Expr1 ()
 end)
  in ( LrTable.NT 2, ( result, Expr1left, Expr2right), rest671)
 end
-|  ( 8, ( ( _, ( MlyValue.Expr Expr2, _, Expr2right)) :: _ :: ( _, ( 
+|  ( 9, ( ( _, ( MlyValue.Expr Expr2, _, Expr2right)) :: _ :: ( _, ( 
 MlyValue.Expr Expr1, Expr1left, _)) :: rest671)) => let val  result = 
 MlyValue.Expr (fn _ => let val  Expr1 = Expr1 ()
  val  Expr2 = Expr2 ()
@@ -303,7 +345,7 @@ MlyValue.Expr (fn _ => let val  Expr1 = Expr1 ()
 end)
  in ( LrTable.NT 2, ( result, Expr1left, Expr2right), rest671)
 end
-|  ( 9, ( ( _, ( MlyValue.Expr Expr2, _, Expr2right)) :: _ :: ( _, ( 
+|  ( 10, ( ( _, ( MlyValue.Expr Expr2, _, Expr2right)) :: _ :: ( _, ( 
 MlyValue.Expr Expr1, Expr1left, _)) :: rest671)) => let val  result = 
 MlyValue.Expr (fn _ => let val  Expr1 = Expr1 ()
  val  Expr2 = Expr2 ()
@@ -311,7 +353,7 @@ MlyValue.Expr (fn _ => let val  Expr1 = Expr1 ()
 end)
  in ( LrTable.NT 2, ( result, Expr1left, Expr2right), rest671)
 end
-|  ( 10, ( ( _, ( MlyValue.Expr Expr2, _, Expr2right)) :: _ :: ( _, ( 
+|  ( 11, ( ( _, ( MlyValue.Expr Expr2, _, Expr2right)) :: _ :: ( _, ( 
 MlyValue.Expr Expr1, Expr1left, _)) :: rest671)) => let val  result = 
 MlyValue.Expr (fn _ => let val  Expr1 = Expr1 ()
  val  Expr2 = Expr2 ()
@@ -319,7 +361,7 @@ MlyValue.Expr (fn _ => let val  Expr1 = Expr1 ()
 end)
  in ( LrTable.NT 2, ( result, Expr1left, Expr2right), rest671)
 end
-|  ( 11, ( ( _, ( MlyValue.Expr Expr2, _, Expr2right)) :: _ :: ( _, ( 
+|  ( 12, ( ( _, ( MlyValue.Expr Expr2, _, Expr2right)) :: _ :: ( _, ( 
 MlyValue.Expr Expr1, Expr1left, _)) :: rest671)) => let val  result = 
 MlyValue.Expr (fn _ => let val  Expr1 = Expr1 ()
  val  Expr2 = Expr2 ()
@@ -327,28 +369,75 @@ MlyValue.Expr (fn _ => let val  Expr1 = Expr1 ()
 end)
  in ( LrTable.NT 2, ( result, Expr1left, Expr2right), rest671)
 end
-|  ( 12, ( ( _, ( _, TRUE1left, TRUE1right)) :: rest671)) => let val  
+|  ( 13, ( ( _, ( _, TRUE1left, TRUE1right)) :: rest671)) => let val  
 result = MlyValue.Expr (fn _ => (ConB(true)))
  in ( LrTable.NT 2, ( result, TRUE1left, TRUE1right), rest671)
 end
-|  ( 13, ( ( _, ( _, FALSE1left, FALSE1right)) :: rest671)) => let
+|  ( 14, ( ( _, ( _, FALSE1left, FALSE1right)) :: rest671)) => let
  val  result = MlyValue.Expr (fn _ => (ConB(false)))
  in ( LrTable.NT 2, ( result, FALSE1left, FALSE1right), rest671)
 end
-|  ( 14, ( ( _, ( MlyValue.Number Number1, Number1left, Number1right))
+|  ( 15, ( ( _, ( MlyValue.Number Number1, Number1left, Number1right))
  :: rest671)) => let val  result = MlyValue.Expr (fn _ => let val  (
 Number as Number1) = Number1 ()
  in (ConI(Number))
 end)
  in ( LrTable.NT 2, ( result, Number1left, Number1right), rest671)
 end
-|  ( 15, ( ( _, ( _, _, CLOSEPARENT1right)) :: ( _, ( MlyValue.Expr 
-Expr1, _, _)) :: ( _, ( _, OPENPARENT1left, _)) :: rest671)) => let
- val  result = MlyValue.Expr (fn _ => let val  Expr1 = Expr1 ()
- in (Expr1)
+|  ( 16, ( ( _, ( _, _, CLOSESQRBRACKET1right)) :: ( _, ( 
+MlyValue.Number Number1, _, _)) :: _ :: ( _, ( MlyValue.ExprList 
+ExprList1, ExprList1left, _)) :: rest671)) => let val  result = 
+MlyValue.Expr (fn _ => let val  (ExprList as ExprList1) = ExprList1 ()
+ val  (Number as Number1) = Number1 ()
+ in (Item(Number, ExprList))
+end)
+ in ( LrTable.NT 2, ( result, ExprList1left, CLOSESQRBRACKET1right), 
+rest671)
+end
+|  ( 17, ( ( _, ( _, _, CLOSEPARENT1right)) :: ( _, ( MlyValue.PlcT 
+PlcT1, _, _)) :: ( _, ( _, OPENPARENT1left, _)) :: rest671)) => let
+ val  result = MlyValue.Expr (fn _ => let val  PlcT1 = PlcT1 ()
+ in (ESeq(PlcT1))
 end)
  in ( LrTable.NT 2, ( result, OPENPARENT1left, CLOSEPARENT1right), 
 rest671)
+end
+|  ( 18, ( ( _, ( _, _, CLOSEPARENT1right)) :: ( _, ( MlyValue.Expr 
+Expr1, _, _)) :: ( _, ( _, OPENPARENT1left, _)) :: rest671)) => let
+ val  result = MlyValue.ExprList (fn _ => let val  Expr1 = Expr1 ()
+ in (List([Expr1]))
+end)
+ in ( LrTable.NT 5, ( result, OPENPARENT1left, CLOSEPARENT1right), 
+rest671)
+end
+|  ( 19, ( ( _, ( _, _, CLOSEPARENT1right)) :: ( _, ( MlyValue.Expr 
+Expr2, _, _)) :: _ :: ( _, ( MlyValue.Expr Expr1, _, _)) :: ( _, ( _, 
+OPENPARENT1left, _)) :: rest671)) => let val  result = 
+MlyValue.ExprList (fn _ => let val  Expr1 = Expr1 ()
+ val  Expr2 = Expr2 ()
+ in (List([Expr1, Expr2]))
+end)
+ in ( LrTable.NT 5, ( result, OPENPARENT1left, CLOSEPARENT1right), 
+rest671)
+end
+|  ( 20, ( ( _, ( _, _, CLOSEPARENT1right)) :: ( _, ( _, 
+OPENPARENT1left, _)) :: rest671)) => let val  result = 
+MlyValue.ExprList (fn _ => (List([])))
+ in ( LrTable.NT 5, ( result, OPENPARENT1left, CLOSEPARENT1right), 
+rest671)
+end
+|  ( 21, ( ( _, ( _, _, CLOSESQRBRACKET1right)) :: ( _, ( 
+MlyValue.PlcT PlcT1, _, _)) :: ( _, ( _, OPENSQRBRACKET1left, _)) :: 
+rest671)) => let val  result = MlyValue.PlcT (fn _ => let val  PlcT1 =
+ PlcT1 ()
+ in (SeqT (PlcT1))
+end)
+ in ( LrTable.NT 4, ( result, OPENSQRBRACKET1left, 
+CLOSESQRBRACKET1right), rest671)
+end
+|  ( 22, ( ( _, ( _, BOOL1left, BOOL1right)) :: rest671)) => let val  
+result = MlyValue.PlcT (fn _ => (BoolT))
+ in ( LrTable.NT 4, ( result, BOOL1left, BOOL1right), rest671)
 end
 | _ => raise (mlyAction i392)
 end
@@ -405,6 +494,12 @@ ParserData.MlyValue.VOID,p1,p2))
 fun OPENPARENT (p1,p2) = Token.TOKEN (ParserData.LrTable.T 20,(
 ParserData.MlyValue.VOID,p1,p2))
 fun CLOSEPARENT (p1,p2) = Token.TOKEN (ParserData.LrTable.T 21,(
+ParserData.MlyValue.VOID,p1,p2))
+fun COMMA (p1,p2) = Token.TOKEN (ParserData.LrTable.T 22,(
+ParserData.MlyValue.VOID,p1,p2))
+fun OPENSQRBRACKET (p1,p2) = Token.TOKEN (ParserData.LrTable.T 23,(
+ParserData.MlyValue.VOID,p1,p2))
+fun CLOSESQRBRACKET (p1,p2) = Token.TOKEN (ParserData.LrTable.T 24,(
 ParserData.MlyValue.VOID,p1,p2))
 end
 end
