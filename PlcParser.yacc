@@ -20,6 +20,8 @@
     | COMMA
     | OPENSQRBRACKET
     | CLOSESQRBRACKET
+    | PRINT
+    | DOUBLEDOUBLEDOTS
 
 %nonterm Prog of expr
     | Declar of expr
@@ -31,7 +33,7 @@
 
 %left Prim1 Prim2
 %left AND EQUAL MULTI DIV PLUS MINUS OPENSQRBRACKET CLOSESQRBRACKET
-%right SEMICOLON OPENPARENT CLOSEPARENT VAR COMMA
+%right SEMICOLON OPENPARENT CLOSEPARENT VAR COMMA PRINT DOUBLEDOUBLEDOTS
 %nonassoc NOT Name
 
 %eop EOF
@@ -50,6 +52,7 @@ Declar: VAR Name EQUAL Expr SEMICOLON Expr Prog (Let(Name1, Expr1, Expr2))
 
 Expr: NOT Expr (Prim1("!", Expr1))
     | MINUS Expr (Prim1("-", Expr1))
+    | Name (Var Name1)
     | Expr AND Expr (Prim2("&&", Expr1, Expr2))
     | Expr PLUS Expr (Prim2("+", Expr1, Expr2))
     | Expr MINUS Expr (Prim2("-", Expr1, Expr2))
@@ -62,6 +65,8 @@ Expr: NOT Expr (Prim1("!", Expr1))
     | Number (ConI(Number))
     | ExprList OPENSQRBRACKET Number CLOSESQRBRACKET (Item(Number, ExprList))
     | OPENPARENT PlcT CLOSEPARENT (ESeq(PlcT1))
+    | PRINT Name SEMICOLON Expr (Prim2(";", Prim1("print", Var Name1), Expr1))
+    | Expr DOUBLEDOUBLEDOTS Expr DOUBLEDOUBLEDOTS Name (Prim2("::", Expr1, Prim2("::", Expr2, Var Name1)))
 
 ExprList: OPENPARENT Expr CLOSEPARENT (List([Expr1]))
     | OPENPARENT Expr COMMA Expr CLOSEPARENT (List([Expr1, Expr2]))

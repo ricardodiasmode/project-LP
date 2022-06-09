@@ -2,6 +2,8 @@ signature PlcParser_TOKENS =
 sig
 type ('a,'b) token
 type svalue
+val DOUBLEDOUBLEDOTS:  'a * 'a -> (svalue,'a) token
+val PRINT:  'a * 'a -> (svalue,'a) token
 val CLOSESQRBRACKET:  'a * 'a -> (svalue,'a) token
 val OPENSQRBRACKET:  'a * 'a -> (svalue,'a) token
 val COMMA:  'a * 'a -> (svalue,'a) token

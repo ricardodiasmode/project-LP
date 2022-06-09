@@ -18,6 +18,7 @@ fun keyWords (s, lpos, rpos) =
         | "false" => FALSE(lpos, rpos)
         | "true" => TRUE(lpos, rpos)
         | "var" => VAR(lpos, rpos)
+        | "print" => PRINT(lpos, rpos)
         | _ => Name(s, lpos, rpos)
 
 (* Convert a str to an int *)
@@ -68,5 +69,6 @@ name = [a-zA-Z_][a-zA-Z_0-9]*;
 "," => (COMMA(!pos, !pos));
 "[" => (OPENSQRBRACKET(!pos, !pos));
 "]" => (CLOSESQRBRACKET(!pos, !pos));
+"::" => (DOUBLEDOUBLEDOTS(!pos, !pos));
 . => (error("\n*** Lexer error: character invalid ***\n");
       raise Fail("Lexer error: character invalid " ^ yytext));
