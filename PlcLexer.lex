@@ -14,11 +14,26 @@ fun keyWords (s, lpos, rpos) =
     case s of
           "Bool" => BOOL(lpos, rpos)
         | "Int" => INT(lpos, rpos)
+        | "if" => IF(lpos, rpos)
+        | "then" => THEN(lpos, rpos)
         | "else" => ELSE(lpos, rpos)
         | "false" => FALSE(lpos, rpos)
         | "true" => TRUE(lpos, rpos)
         | "var" => VAR(lpos, rpos)
+        | "end" => END(lpos, rpos)
+        | "fn" => FN(lpos, rpos)
+        | "fun" => FUN(lpos, rpos)
+        | "hd" => HD(lpos, rpos)
+        | "ise" => ISEQUAL(lpos, rpos)
+        | "match" => MATCH(lpos, rpos)
+        | "Nil" => NIL(lpos, rpos)
+        | "print" => PRINT(lpos, rpos)
+        | "rec" => REC(lpos, rpos)
+        | "tl" => TL(lpos, rpos)
+        | "with" => WITH(lpos, rpos)
+        | "_" => UNDERSCORE(lpos, rpos)
         | _ => Name(s, lpos, rpos)
+
 
 (* Convert a str to an int *)
 fun strToInt s =
@@ -50,18 +65,35 @@ number = [0-9];
 whitespace = [\ \t];
 letter = [A-Za-z];
 name = [a-zA-Z_][a-zA-Z_0-9]*;
+
 %%
-\n => (lineNumber := !lineNumber + 1; EOF(!pos, !pos));
+\n => (lineNumber := !lineNumber + 1; lex());
 {whitespace}+ => (lex());
 {number}+ => (Number(strToInt(yytext), !pos, !pos));
 {name} => (keyWords(yytext, !pos, !pos));
 "!" => (NOT(!pos, !pos));
 "&&" => (AND(!pos, !pos));
 "=" => (EQUAL(!pos, !pos));
+"!=" => (DIFF(!pos, !pos));
 "+" => (PLUS(!pos, !pos));
 "-" => (MINUS(!pos, !pos));
 "*" => (MULTI(!pos, !pos));
 "/" => (DIV(!pos, !pos));
+"," => (COMMA(!pos, !pos));
 ";" => (SEMICOLON(!pos, !pos));
+":" => (COLON(!pos, !pos));
+"::" => (SCOPEOP(!pos, !pos));
+"<" => (LSTHAN(!pos, !pos));
+"<=" => (LSEQTHAN(!pos, !pos));
+"[" => (LSBRAC(!pos, !pos));
+"]" => (RSBRAC(!pos, !pos));
+"{" => (LBRA(!pos, !pos));
+"}" => (RBRA(!pos, !pos));
+"(" => (LPAR(!pos, !pos));
+")" => (RPAR(!pos, !pos));
+"|" => (PIPE(!pos, !pos));
+"->" => (ARROW(!pos, !pos));
+"=>" => (ARROWFUNCTION(!pos, !pos));
+"_" => (UNDERSCORE(!pos, !pos));
 . => (error("\n*** Lexer error: character invalid ***\n");
       raise Fail("Lexer error: character invalid " ^ yytext));

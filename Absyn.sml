@@ -1,5 +1,8 @@
 (*Absyn*)
 
+
+use "Environ.sml"; (* essa adição evita erro " unbound variable or constructor 'env' " *)
+
 datatype plcType =
    IntT
   | BoolT
