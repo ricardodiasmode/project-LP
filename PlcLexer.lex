@@ -63,7 +63,6 @@ fun init() = ()
 
 number = [0-9];
 whitespace = [\ \t];
-letter = [A-Za-z];
 name = [a-zA-Z_][a-zA-Z_0-9]*;
 
 %%
@@ -71,7 +70,7 @@ name = [a-zA-Z_][a-zA-Z_0-9]*;
 {whitespace}+ => (lex());
 {number}+ => (Number(strToInt(yytext), !pos, !pos));
 {name} => (keyWords(yytext, !pos, !pos));
-"!" => (NOT(!pos, !pos));
+"!" => (NOT(!pos, !pos)); 
 "&&" => (AND(!pos, !pos));
 "=" => (EQUAL(!pos, !pos));
 "!=" => (DIFF(!pos, !pos));
@@ -82,7 +81,7 @@ name = [a-zA-Z_][a-zA-Z_0-9]*;
 "," => (COMMA(!pos, !pos));
 ";" => (SEMICOLON(!pos, !pos));
 ":" => (COLON(!pos, !pos));
-"::" => (SCOPEOP(!pos, !pos));
+"::" => (ADDEOP(!pos, !pos));
 "<" => (LSTHAN(!pos, !pos));
 "<=" => (LSEQTHAN(!pos, !pos));
 "[" => (LSBRAC(!pos, !pos));
