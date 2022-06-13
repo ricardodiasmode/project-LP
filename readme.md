@@ -1,6 +1,6 @@
-## Projeto 1 - Linguagens de programação
-
-Ricardo Dias Avelar
-Gustavo Ribeiro Alves Rodrigues
+# Projeto 1 - Linguagens de programação
+## Nomes:
+### Ricardo Dias Avelar
+### Gustavo Ribeiro Alves Rodrigues
 
 
