@@ -14,31 +14,6 @@ type lexresult = (slvalue, pos)token
 
 val pos = ref 0
 
-fun keyWords (s, lpos, rpos) =
-    case s of
-          "Bool" => BOOL(lpos, rpos)
-        | "Int" => INT(lpos, rpos)
-        | "if" => IF(lpos, rpos)
-        | "then" => THEN(lpos, rpos)
-        | "else" => ELSE(lpos, rpos)
-        | "false" => FALSE(lpos, rpos)
-        | "true" => TRUE(lpos, rpos)
-        | "var" => VAR(lpos, rpos)
-        | "end" => END(lpos, rpos)
-        | "fn" => FN(lpos, rpos)
-        | "fun" => FUN(lpos, rpos)
-        | "hd" => HD(lpos, rpos)
-        | "ise" => ISEQUAL(lpos, rpos)
-        | "match" => MATCH(lpos, rpos)
-        | "Nil" => NIL(lpos, rpos)
-        | "print" => PRINT(lpos, rpos)
-        | "rec" => REC(lpos, rpos)
-        | "tl" => TL(lpos, rpos)
-        | "with" => WITH(lpos, rpos)
-        | "_" => UNDERSCORE(lpos, rpos)
-        | _ => Name(s, lpos, rpos)
-
-
 (* Convert a str to an int *)
 fun strToInt s =
     case Int.fromString s of
@@ -62,6 +37,32 @@ fun eof () = Tokens.EOF(0,0)
 
 (* Initialize the lexer. *)
 fun init() = ()
+
+(* Checks if the identifier is a keyword of the language *)
+fun keyID(s, lpos, rpos) =
+    case s of
+          "Bool" => BOOL(lpos, rpos)
+        | "Int" => INT(lpos, rpos)
+        | "if" => IF(lpos, rpos)
+        | "then" => THEN(lpos, rpos)
+        | "else" => ELSE(lpos, rpos)
+        | "false" => FALSE(lpos, rpos)
+        | "true" => TRUE(lpos, rpos)
+        | "var" => VAR(lpos, rpos)
+        | "end" => END(lpos, rpos)
+        | "fn" => FN(lpos, rpos)
+        | "fun" => FUN(lpos, rpos)
+        | "hd" => HD(lpos, rpos)
+        | "ise" => ISEQUAL(lpos, rpos)
+        | "match" => MATCH(lpos, rpos)
+        | "Nil" => NIL(lpos, rpos)
+        | "print" => PRINT(lpos, rpos)
+        | "rec" => REC(lpos, rpos)
+        | "tl" => TL(lpos, rpos)
+        | "with" => WITH(lpos, rpos)
+        | "_" => UNDERSCORE(lpos, rpos)
+        | _ => ID(s, lpos, rpos)
+
 end (* end of user routines *)
 exception LexError (* raised if illegal leaf action tried *)
 structure Internal =
@@ -279,7 +280,7 @@ let fun continue() = lex() in
 			(* Application actions *)
 
   1 => (lineNumber := !lineNumber + 1; lex())
-| 10 => let val yytext=yymktext() in keyWords(yytext, !pos, !pos) end
+| 10 => let val yytext=yymktext() in keyID(yytext, !pos, !pos) end
 | 12 => (NOT(!pos, !pos))
 | 15 => (AND(!pos, !pos))
 | 17 => (EQUAL(!pos, !pos))
@@ -291,7 +292,7 @@ let fun continue() = lex() in
 | 30 => (COMMA(!pos, !pos))
 | 32 => (SEMICOLON(!pos, !pos))
 | 34 => (COLON(!pos, !pos))
-| 37 => (ADDEOP(!pos, !pos))
+| 37 => (ADDTL(!pos, !pos))
 | 39 => (LSTHAN(!pos, !pos))
 | 4 => (lex())
 | 42 => (LSEQTHAN(!pos, !pos))

@@ -5,7 +5,7 @@ type svalue
 val EOF:  'a * 'a -> (svalue,'a) token
 val Number: (int) *  'a * 'a -> (svalue,'a) token
 val CINT: (int) *  'a * 'a -> (svalue,'a) token
-val Name: (string) *  'a * 'a -> (svalue,'a) token
+val ID: (string) *  'a * 'a -> (svalue,'a) token
 val INT:  'a * 'a -> (svalue,'a) token
 val BOOL:  'a * 'a -> (svalue,'a) token
 val NIL:  'a * 'a -> (svalue,'a) token
@@ -26,7 +26,7 @@ val RSBRAC:  'a * 'a -> (svalue,'a) token
 val COLON:  'a * 'a -> (svalue,'a) token
 val COMMA:  'a * 'a -> (svalue,'a) token
 val SEMICOLON:  'a * 'a -> (svalue,'a) token
-val ADDEOP:  'a * 'a -> (svalue,'a) token
+val ADDTL:  'a * 'a -> (svalue,'a) token
 val LSEQTHAN:  'a * 'a -> (svalue,'a) token
 val LSTHAN:  'a * 'a -> (svalue,'a) token
 val DIFF:  'a * 'a -> (svalue,'a) token
@@ -35,6 +35,8 @@ val DIV:  'a * 'a -> (svalue,'a) token
 val MULTI:  'a * 'a -> (svalue,'a) token
 val PLUS:  'a * 'a -> (svalue,'a) token
 val AND:  'a * 'a -> (svalue,'a) token
+val CCOMEN:  'a * 'a -> (svalue,'a) token
+val OCOMEN:  'a * 'a -> (svalue,'a) token
 val PRINT:  'a * 'a -> (svalue,'a) token
 val ISEQUAL:  'a * 'a -> (svalue,'a) token
 val TL:  'a * 'a -> (svalue,'a) token

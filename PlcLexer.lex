@@ -10,31 +10,6 @@ type lexresult = (slvalue, pos)token
 
 val pos = ref 0
 
-fun keyWords (s, lpos, rpos) =
-    case s of
-          "Bool" => BOOL(lpos, rpos)
-        | "Int" => INT(lpos, rpos)
-        | "if" => IF(lpos, rpos)
-        | "then" => THEN(lpos, rpos)
-        | "else" => ELSE(lpos, rpos)
-        | "false" => FALSE(lpos, rpos)
-        | "true" => TRUE(lpos, rpos)
-        | "var" => VAR(lpos, rpos)
-        | "end" => END(lpos, rpos)
-        | "fn" => FN(lpos, rpos)
-        | "fun" => FUN(lpos, rpos)
-        | "hd" => HD(lpos, rpos)
-        | "ise" => ISEQUAL(lpos, rpos)
-        | "match" => MATCH(lpos, rpos)
-        | "Nil" => NIL(lpos, rpos)
-        | "print" => PRINT(lpos, rpos)
-        | "rec" => REC(lpos, rpos)
-        | "tl" => TL(lpos, rpos)
-        | "with" => WITH(lpos, rpos)
-        | "_" => UNDERSCORE(lpos, rpos)
-        | _ => Name(s, lpos, rpos)
-
-
 (* Convert a str to an int *)
 fun strToInt s =
     case Int.fromString s of
@@ -58,18 +33,44 @@ fun eof () = Tokens.EOF(0,0)
 
 (* Initialize the lexer. *)
 fun init() = ()
+
+(* Checks if the identifier is a keyword of the language *)
+fun keyID(s, lpos, rpos) =
+    case s of
+          "Bool" => BOOL(lpos, rpos)
+        | "Int" => INT(lpos, rpos)
+        | "if" => IF(lpos, rpos)
+        | "then" => THEN(lpos, rpos)
+        | "else" => ELSE(lpos, rpos)
+        | "false" => FALSE(lpos, rpos)
+        | "true" => TRUE(lpos, rpos)
+        | "var" => VAR(lpos, rpos)
+        | "end" => END(lpos, rpos)
+        | "fn" => FN(lpos, rpos)
+        | "fun" => FUN(lpos, rpos)
+        | "hd" => HD(lpos, rpos)
+        | "ise" => ISEQUAL(lpos, rpos)
+        | "match" => MATCH(lpos, rpos)
+        | "Nil" => NIL(lpos, rpos)
+        | "print" => PRINT(lpos, rpos)
+        | "rec" => REC(lpos, rpos)
+        | "tl" => TL(lpos, rpos)
+        | "with" => WITH(lpos, rpos)
+        | "_" => UNDERSCORE(lpos, rpos)
+        | _ => ID(s, lpos, rpos)
+
 %%
 %header (functor PlcLexerFun(structure Tokens: PlcParser_TOKENS));
 
 number = [0-9];
 whitespace = [\ \t];
-name = [a-zA-Z_][a-zA-Z_0-9]*;
+identifier = [a-zA-Z_][a-zA-Z_0-9]*;
 
 %%
 \n => (lineNumber := !lineNumber + 1; lex());
 {whitespace}+ => (lex());
 {number}+ => (Number(strToInt(yytext), !pos, !pos));
-{name} => (keyWords(yytext, !pos, !pos));
+{identifier} => (keyID(yytext, !pos, !pos));
 "!" => (NOT(!pos, !pos)); 
 "&&" => (AND(!pos, !pos));
 "=" => (EQUAL(!pos, !pos));
@@ -81,7 +82,7 @@ name = [a-zA-Z_][a-zA-Z_0-9]*;
 "," => (COMMA(!pos, !pos));
 ";" => (SEMICOLON(!pos, !pos));
 ":" => (COLON(!pos, !pos));
-"::" => (ADDEOP(!pos, !pos));
+"::" => (ADDTL(!pos, !pos));
 "<" => (LSTHAN(!pos, !pos));
 "<=" => (LSEQTHAN(!pos, !pos));
 "[" => (LSBRAC(!pos, !pos));
