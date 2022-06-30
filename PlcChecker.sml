@@ -14,6 +14,7 @@ exception NotFunc
 exception ListOutOfRange
 exception OpNonList
 exception CouldNotGetFunTypes
+exception ListTypesDiff
 
 fun getFunTypes (f:FunT) (env: plcType env) : (plcType, plcType) =
 	case f of
@@ -92,11 +93,37 @@ fun teval (e:expr) (env: plcType env) : plcType =
 					if teval e2 env != teval pt env then raise CallTypeMisM
 					else
 						let
-							val rt = teval (eval e2) env
+							val rt = teval e2 env
 						in
 							if rt = ft then FunT (teval e2 env, ft)
 							else raise WrongRetType
 						end
 				end
-
+		| List(lhd::ltl) =>
+			if lhd = [] then ListOutOfRange
+			else
+				let
+					val thd = teval lhd env
+					val ttl = if tl ltl = [] then teval (hd ltl) env
+							else teval (List(ltl)) env
+				in
+					if thd = ttl then ListT(thd)
+					else raise ListTypesDiff
+				end
+		| Item(idx, l) =>
+			if idx < 0 then ListOutOfRange
+			else
+				if teval l env != ListT then OpNonList
+				else 
+					if idx = 0 then teval (hd l) env
+					else 
+						if tl l = [] then ListOutOfRange
+						else teval Item(idx-1, tl l) env
+		| Anon(ft, aenv, e2) =>
+				let
+					val rt = teval e2 aenv
+				in
+					if rt != e1 then raise WrongRetType
+					else FunT(rt, ft)
+				end
 		| _   =>  raise UnknownType
