@@ -8,7 +8,13 @@ exception NotAFunc
 
 fun eval (e:expr) (env:plcVal env) : plcVal =
 	case e of
-			ConI i => IntV i
+		  ConI i => IntV i
+		  ConB i => BoolV i
+		  ESeq i => let
+		  				val s = val2string SeqV ([hd i, eval (tl i) env])
+					in
+						print(s^"\n"); SeqV []
+					end
 		| Var x => lookup env x
 		| Prim1(opr, e1) =>
 				let
@@ -44,5 +50,6 @@ fun eval (e:expr) (env:plcVal env) : plcVal =
 				in
 					eval e2 env2
 				end
+		
 		| _ => raise Impossible
 

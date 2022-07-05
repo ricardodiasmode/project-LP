@@ -62,8 +62,8 @@ fun teval (e:expr) (env: plcType env) : plcType =
 				val env' = (v,tv1)::env
 				val t2 = teval e2 env'
 			in
-				if t1 != tf then WrongRetType
-				else if t1 != tv then CallTypeMisM
+				if t1 != tf then raise WrongRetType
+				else if t1 != tv then raise CallTypeMisM
 					 else t2
 			end
         | If(cond, e1, e2) =>
