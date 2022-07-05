@@ -58,7 +58,9 @@ fun teval (e:expr) (env: plcType env) : plcType =
 		| Letrec(f, tf, v, tv, e1, e2) =>
 			let
 				val t1 = teval e1 env
-				val t2 = teval e2 env
+				val tv1 = teval tv env
+				val env' = (v,tv1)::env
+				val t2 = teval e2 env'
 			in
 				if t1 != tf then WrongRetType
 				else if t1 != tv then CallTypeMisM
