@@ -49,12 +49,21 @@ fun teval (e:expr) (env: plcType env) : plcType =
 					| _   =>  raise UnknownType
 				end
 		| Let(x, e1, e2) =>
-				let
-					val t = teval e1 env
-					val env' = (x,t)::env
-				in
-					teval e2 env'
-				end
+			let
+				val t = teval e1 env
+				val env' = (x,t)::env
+			in
+				teval e2 env'
+			end
+		| Letrec(f, tf, v, tv, e1, e2) =>
+			let
+				val t1 = teval e1 env
+				val t2 = teval e2 env
+			in
+				if t1 != tf then WrongRetType
+				else if t1 != tv then CallTypeMisM
+					 else t2
+			end
         | If(cond, e1, e2) =>
             let
                 val condType = teval cond env
