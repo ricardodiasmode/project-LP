@@ -77,7 +77,7 @@ fun teval (e:expr) (env: plcType env) : plcType =
                                         else raise DiffBrTypes
                 else raise IfCondNotBool
 			end
-		| Match(e1, e2) =>
+		| Match (e1, e2) =>
 			if e2 = [] then raise NoMatchResults
 			else
 				let
