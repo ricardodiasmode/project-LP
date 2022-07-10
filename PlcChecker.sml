@@ -31,6 +31,34 @@ fun teval (e:expr) (env: plcType env) : plcType =
 								| _ => raise EmptySeq
 						end
 		| Var x => lookup env x
+		| Prim1("!", e) =>
+            if teval e env = BoolT then BoolT else raise UnknownType
+	    | Prim1("-", e) =>
+            if teval e env = IntT then IntT else raise UnknownType
+	    | Prim1("hd", e) =>
+		    let in
+		    	case (teval e env) of
+		    		SeqT s => s
+		    		| _ => raise UnknownType
+		    end
+	    | Prim1("tl", e) =>
+	    	let in
+	    		case (teval e env) of
+	    			SeqT s => SeqT s
+	    			| _ => raise UnknownType
+	    	end
+	    | Prim1("ise", e) =>
+	    	let in
+	    		case (teval e env) of
+	    			SeqT s => BoolT
+	    			| _ => raise UnknownType
+	    	end	
+	    | Prim1("print", e) =>
+            let
+                val t = teval e env
+            in
+                ListT []
+            end
 		| Prim2(opr, e1, e2) => 
 				let
 					val t1 = teval e1 env;
@@ -268,6 +296,15 @@ fun teval (e:expr) (env: plcType env) : plcType =
                     ListT l => getIndexElement(i, l)
                     | _ => raise OpNonList
             end
+		| List [] => ListT []
+        | List l =>
+		    let 
+		    	fun tevalList (h::[]) = (teval h env)::[]
+		    	| tevalList (h::t) = (teval h env)::(tevalList t)
+		    	| tevalList (_) = []
+		    in
+		    	ListT (tevalList l)
+		    end
 		(*
 		| List(lhd::ltl) =>
 			if lhd = [] then ListOutOfRange
@@ -298,30 +335,5 @@ fun teval (e:expr) (env: plcType env) : plcType =
 				end
 		| _   =>  raise UnknownType
 		*)
-		|Prim1(opr, e1) => let in
-				case (opr) of
-						("!") => if teval e1 env = BoolT then BoolT else raise UnknownType
-						| ("-") => if teval e1 env = IntT then IntT else raise UnknownType 
-						| ("hd") => let in
-											case (teval e1 env) of
-												SeqT s => s
-												| _ => raise UnknownType
-										end
-						| ("tl") => let in
-											case (teval e1 env) of
-												SeqT s => SeqT s
-												| _ => raise UnknownType
-										end
-						| ("ise") => let in
-											case (teval e1 env) of
-												SeqT s => BoolT
-												| _ => raise UnknownType
-										end	
-						| ("print") => 		let
-												val t = teval e1 env
-											in
-												ListT []
-											end
-				end
-
+		| Anon(t, a, e) => FunT(t, (teval e ((a,t)::env)))
         | _ => raise UnknownType
