@@ -5,14 +5,6 @@ exception HDEmptySeq
 exception TLEmptySeq
 exception ValueNotFoundInMatch
 exception NotAFunc
-
-(*
-fun makeList (l) = 
-	case tl l of 
-	 [] => hd l
-	| _ => [hd l makeList (tl l)]
-*)(* PlcInterp *)
-
 exception Impossible
 exception HDEmptySeq
 exception TLEmptySeq
@@ -240,36 +232,16 @@ fun eval (e:expr) (env:plcVal env) : plcVal =
 	case e of
 (**)		  ConI i => IntV i
 (**)		| ConB i => BoolV i
-		(*| ESeq i => 
-			let
-				val s = val2string SeqV ([hd i, eval (tl i) env])
-			in
-				print(s^"\n"); SeqV []
-			end*)
 (**)		| ESeq i => SeqV[]
 (**)		| Var x => lookup env x
-(**)(**)		| Let(x, e1, e2) =>
+(**)		| Let(x, e1, e2) =>
 			let
 				val v = eval e1 env
 				val env2 = (x,v)::env
 			in
 				eval e2 env2
 			end
-(**)(**)		| Letrec(f, argType, a, fType, e1, e2) =>  eval e2 ((f, Clos(f, a, e1, env)) :: env)
-(**)(**)		(*| Prim1(opr, e1) =>
-				let
-					val v1 = eval e1 env
-				in
-					case (opr, v1) of
-						("-", IntV i) => IntV (~i)
-						| ("print", _) =>
-										let
-											val s = val2string v1
-										in
-											print(s^"\n"); ListV []
-										end
-						| _   => raise Impossible
-				end*)
+(**)		| Letrec(f, argType, a, fType, e1, e2) =>  eval e2 ((f, Clos(f, a, e1, env)) :: env)	
 (**)		| Prim1(oper, exp) =>
             let
                 val t1 = eval exp env
@@ -343,7 +315,7 @@ fun eval (e:expr) (env:plcVal env) : plcVal =
                         end
                     | _ => raise Impossible
             end	
-(**)(**)			| Prim2(";", e1, e2) => 
+			| Prim2(";", e1, e2) => 
 				let
 					val aux = eval e1 env
 				in

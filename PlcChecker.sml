@@ -14,13 +14,7 @@ exception NotFunc
 exception ListOutOfRange
 exception OpNonList
 exception CouldNotGetFunTypes
-exception ListTypesDiff
-(*)
-fun getFunTypes (f:FunT) (env: plcType env) : (plcType, plcType) =
-	case f of
-		  FunT(t1, t2) => (teval t1 env, teval t2 env)
-		| _ => raise CouldNotGetFunTypes
-*)
+
 fun teval (e:expr) (env: plcType env) : plcType =
 	case e of
 		  ConI _ => IntT
@@ -70,46 +64,46 @@ fun teval (e:expr) (env: plcType env) : plcType =
 					| ("*") => if ((t1 = t2) andalso (t1 = IntT)) then IntT else raise NotEqTypes
 					| ("/") => if ((t1 = t2) andalso (t1 = IntT)) then IntT else raise NotEqTypes
 					| ("=") =>
-							let in
-								case (t1) of
-									IntT =>
-										if (t2) = IntT andalso (t1) = (t2) then
-											BoolT
-										else
-											raise NotEqTypes
-									| BoolT =>
-										if (t2) = BoolT andalso (t1) = (t2) then
-											BoolT
-										else
-											raise NotEqTypes
-									| SeqT t =>
-										let in
-											case t of
-												BoolT => BoolT
-												| IntT => BoolT
-												| ListT([]) => BoolT
-												| _ => raise NotEqTypes
-										end
-									| ListT([]) =>
-										if (t2) = ListT([]) andalso (t1) = (t2) then
-											BoolT
-										else
-											raise NotEqTypes
-									| ListT(types) =>
-										let
-											val aux = map(
-												fn(t) =>
-													case t of
-														BoolT => BoolT
-														| IntT => IntT
-														| ListT([]) => ListT([])
-														| _ => raise NotEqTypes
-											) types
-										in
-											BoolT
-										end
-									| _ => raise NotEqTypes
-							end
+						let in
+							case (t1) of
+								IntT =>
+									if (t2) = IntT andalso (t1) = (t2) then
+										BoolT
+									else
+										raise NotEqTypes
+								| BoolT =>
+									if (t2) = BoolT andalso (t1) = (t2) then
+										BoolT
+									else
+										raise NotEqTypes
+								| SeqT t =>
+									let in
+										case t of
+											BoolT => BoolT
+											| IntT => BoolT
+											| ListT([]) => BoolT
+											| _ => raise NotEqTypes
+									end
+								| ListT([]) =>
+									if (t2) = ListT([]) andalso (t1) = (t2) then
+										BoolT
+									else
+										raise NotEqTypes
+								| ListT(types) =>
+									let
+										val aux = map(
+											fn(t) =>
+												case t of
+													BoolT => BoolT
+													| IntT => IntT
+													| ListT([]) => ListT([])
+													| _ => raise NotEqTypes
+										) types
+									in
+										BoolT
+									end
+								| _ => raise NotEqTypes
+						end
 					| ("!=") =>
 							let in
 								case (t1) of
@@ -250,23 +244,6 @@ fun teval (e:expr) (env: plcType env) : plcType =
                 in
                     readList(cases)
                 end
-		(*
-		| Call(e1, e2) =>
-			if teval e1 env != FunT then raise NotFunc
-			else
-				let
-					val (ft, pt) = getFunTypes e1
-				in
-					if teval e2 env != teval pt env then raise CallTypeMisM
-					else
-						let
-							val rt = teval e2 env
-						in
-							if rt = ft then FunT (teval e2 env, ft)
-							else raise WrongRetType
-						end
-				end
-		*)
 		| Call(e1, e2) =>
             let in
                 case (teval e1 env) of
@@ -305,35 +282,6 @@ fun teval (e:expr) (env: plcType env) : plcType =
 		    in
 		    	ListT (tevalList l)
 		    end
-		(*
-		| List(lhd::ltl) =>
-			if lhd = [] then ListOutOfRange
-			else
-				let
-					val thd = teval lhd env
-					val ttl = if tl ltl = [] then teval (hd ltl) env
-							else teval (List(ltl)) env
-				in
-					if thd = ttl then ListT(thd)
-					else raise ListTypesDiff
-				end
-		| Item(idx, l) =>
-			if idx < 0 then ListOutOfRange
-			else
-				if teval l env != ListT then OpNonList
-				else 
-					if idx = 0 then teval (hd l) env
-					else 
-						if tl l = [] then ListOutOfRange
-						else teval Item(idx-1, tl l) env
-		| Anon(ft, aenv, e2) =>
-				let
-					val rt = teval e2 env
-				in
-					if rt != e1 then raise WrongRetType
-					else FunT(rt, ft)
-				end
-		| _   =>  raise UnknownType
-		*)
 		| Anon(t, a, e) => FunT(t, (teval e ((a,t)::env)))
         | _ => raise UnknownType
+		

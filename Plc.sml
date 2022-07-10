@@ -32,9 +32,9 @@ fun run (e:expr) =
         EmptySeq => "Erro: A sequencia de entrada nao contem nenhum elemento."
         | UnknownType => "Erro: Tipo desconhecido."
         | NotEqTypes => "Erro: Se os tipos usados na comparacao sao diferentes."
-        | WrongRetType => "Erro: O tipo de retorno da função não condiz com o corpo da mesma."
+        | WrongRetType => "Erro: O tipo de retorno da funcao nao condiz com o corpo da mesma."
         | DiffBrTypes => "Erro: Os tipos da expressao dos possiveis caminhos de um If divergem."
-        | IfCondNotBool => "Erro: A condição do if nao e booleana."
+        | IfCondNotBool => "Erro: A condicao do if nao e booleana."
         | NoMatchResults => "Erro: Nao ha resultados para a expressao match."
         | MatchResTypeDiff => "Erro: O tipo de algum dos casos em match difere dos demais."
         | MatchCondTypesDiff => "Erro: O tipo das opcoes de match difere do tipo da expressao passada para Match."
@@ -47,3 +47,4 @@ fun run (e:expr) =
         | TLEmptySeq => "Erro: Cauda da lista vazia."
         | ValueNotFoundInMatch => "Erro: Valor nao encontrado no Match."
         | SymbolNotFound => "Erro: Simbolo nao encontrado."
+        
