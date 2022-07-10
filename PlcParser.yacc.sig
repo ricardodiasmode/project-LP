@@ -35,8 +35,6 @@ val DIV:  'a * 'a -> (svalue,'a) token
 val MULTI:  'a * 'a -> (svalue,'a) token
 val PLUS:  'a * 'a -> (svalue,'a) token
 val AND:  'a * 'a -> (svalue,'a) token
-val CCOMEN:  'a * 'a -> (svalue,'a) token
-val OCOMEN:  'a * 'a -> (svalue,'a) token
 val PRINT:  'a * 'a -> (svalue,'a) token
 val ISEQUAL:  'a * 'a -> (svalue,'a) token
 val TL:  'a * 'a -> (svalue,'a) token
