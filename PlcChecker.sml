@@ -241,6 +241,7 @@ fun teval (e:expr) (env: plcType env) : plcType =
                                             readList(tail)
                                 | _ => raise UnknownType
                         end
+					| readList(_) = raise UnknownType
                 in
                     readList(cases)
                 end
